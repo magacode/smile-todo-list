@@ -1,1 +1,1 @@
-# smileTodoList
+# smile-todo-list
