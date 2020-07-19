@@ -1,7 +1,7 @@
 import { AUTH_USER_AUTHORIZATION, AUTH_USER_DEAUTORIZATION } from '../constants';
 
 const authUserAuthorization = () => {
-    localStorage.setItem('autorization');
+    localStorage.setItem('autorization', true);
 
     return {
         type: AUTH_USER_AUTHORIZATION,

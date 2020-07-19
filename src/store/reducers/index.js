@@ -1,7 +1,7 @@
-import { CombineReducers } from 'redux';
+import { combineReducers } from 'redux';
 
-import { authReducer } from './auth';
+import authReducer from './auth';
 
-export default CombineReducers ({
+export default combineReducers ({
     authReducer,
 });

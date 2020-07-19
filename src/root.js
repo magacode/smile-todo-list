@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import App from './components/app';
+import PrivateRoute from './components/private-route';
+import App from './app';
 import LoginPage from './login-page';
 import ResetPasswordPage from './reset-password-page';
 
