@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory, useLocation, Link } from 'react-router-dom';
+
+import { authUserAuthorization } from '../store/actions';
+import ContainerRow from '../components/container-row';
 
 import classes from './login-page.module.scss';
 
-const LoginPage = () => {
+const LoginPage = ({ autorization, authUserAuthorization }) => {    
     let history = useHistory();
     let location = useLocation();
 
-    let { from } = location.state || { pathname: '/app' };
+    let { from } = location.state || { from: { pathname: "/app" } };
 
     useEffect(() => {
         if (autorization) {
@@ -15,7 +19,7 @@ const LoginPage = () => {
         }
     }, [from, history, autorization])
 
-    let authorizationManagement = () => {
+    let authorizationManagement = () => {        
         authUserAuthorization();
     }
 
@@ -78,8 +82,10 @@ const mapStateToProps = ({ authReducer }) => {
     }
 }
 
-const mapDispatchToProps = {
-    authUserAuthorization,
+const mapDispatchToProps = (dispatch) => {
+    return {
+        authUserAuthorization: () => authUserAuthorization(),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

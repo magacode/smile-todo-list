@@ -1,4 +1,4 @@
-import { AUTH_USER_AUTORIZATION, AUTH_USER_DEAUTORIZATION } from '../constants';
+import { AUTH_USER_AUTHORIZATION, AUTH_USER_DEAUTORIZATION } from '../constants';
 
 const initialState = {
     autorization: localStorage.getItem('autorization'),
@@ -7,7 +7,7 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
 
     switch(action.type) {
-        case AUTH_USER_AUTORIZATION:
+        case AUTH_USER_AUTHORIZATION:
             return {
                 autorization: action.payload,
             }
