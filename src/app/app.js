@@ -1,23 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { getIdxArray } from '../utils';
 import ContainerRow from '../components/container-row';
 import List from '../components/list';
 import AddTask from '../components/add-task';
 import TodoTask from '../components/todo-task';
+import { taskDel } from '../store/actions';
 
 import classes from './app.module.scss';
 
-const App = () => {
-    const testData = [{id: 1, title: 'Dich'}, {id: 2, title: 'Dich'}, {id: 3, title: 'Dich'}];
+const App = ({ tasks, taskDel }) => {
+
+    const deleteTask = (id) => {        
+       
+         const idx = getIdxArray(tasks, id);
+
+         taskDel([
+            ...tasks.slice(0, idx),
+            ...tasks.slice(idx +1)
+       ]);
+    };
+
     return (
         <ContainerRow direction="center">
             <div className='col-12 col-sm-6'>
-                {/* <TodoSearch /> */}
-                <List data={testData} component={TodoTask} />
+                <List data={tasks} component={TodoTask} taskDel={deleteTask} />
                 <AddTask />
             </div>
         </ContainerRow>
     )
 }
 
-export default App;
+const mapStateToProps = ({ taskReducer }) => {
+    return {
+        tasks: taskReducer.tasks,
+    }    
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        taskDel: (updateTasks) => dispatch(taskDel(updateTasks)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

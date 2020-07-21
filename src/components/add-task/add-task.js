@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import { modalOpen, modalClose, taskAdd } from '../../store/actions';
+import { modalOpen, modalClose, taskAdd, taskDel } from '../../store/actions';
 import Modal from '../modal';
 
-const AddTask = ({ isOpen, modalOpen, modalClose, taskAdd }) => {
+const AddTask = ({ isOpen, tasks, modalOpen, modalClose, taskAdd }) => {
     const [title, setTitle] = useState('Введите заголовок задачи');
     const [descr, setDescr] = useState('Введите описание задачи');
 
-    let countId = 0;
+    const createTask = (title, descr) => {      
+        let getLastId;
 
-    const submit = (title, descr) => {     
-        taskAdd({id: countId++, title, descr})
+        if (!tasks.length) {
+            getLastId = 0;
+        } else {
+            getLastId = ++tasks[tasks.length - 1].id;
+        }
+
+        const newArray = [...tasks, {id: getLastId, title, descr}];         
+   
+        taskAdd(newArray);
+       
     }
 
     return (
@@ -34,16 +43,17 @@ const AddTask = ({ isOpen, modalOpen, modalClose, taskAdd }) => {
                         <textarea className="form-control" id="task-descr" rows="3" value={descr} onChange={event => setDescr(event.target.value)}></textarea>
                     </div>
                 </form>
-                <button onClick={submit}>Отправить</button>
+                <button onClick={() => createTask(title, descr)}>Отправить</button>
             </Modal>
 
         </div>
     )
 }
 
-const mapStateToProps = ({ modalReducer }) => {
+const mapStateToProps = ({ modalReducer, taskReducer }) => {
     return {
         isOpen: modalReducer.isOpen,
+        tasks: taskReducer.tasks,
     }
 }
 
@@ -51,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         modalOpen: () => dispatch(modalOpen()), 
         modalClose: () => dispatch(modalClose()),
-        taskAdd: obj => dispatch(taskAdd(obj)),
+        taskAdd: (newTaskObj) => dispatch(taskAdd(newTaskObj)),
     }
 }
 

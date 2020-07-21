@@ -1,19 +1,23 @@
 import { TASK_ADD, TASK_DELETE } from '../constants';
 
-const taskAdd = ({ id, title, descr }) => {  
+const taskAdd = (newArray) => {  
 
-    const newTask = {
-        id,
-        title,
-        descr,
-    }
+  
 
     return {
         type: TASK_ADD,
-        payload: newTask, 
+        payload: newArray, 
+    }
+}
+
+const taskDel = (updateTasks) => {    
+    return {
+        type: TASK_DELETE,
+        payload: updateTasks,
     }
 }
 
 export {
     taskAdd,
+    taskDel,
 }

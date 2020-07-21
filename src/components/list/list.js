@@ -1,12 +1,12 @@
 import React from 'react';
 
-const List = ({ data, component: ComponentItem }) => {
+const List = ({ data, taskDel, component: ComponentItem }) => {
     return (
         <ul className="list-group">
             {
                 data.map((item) => {
-                    const { id, ...itemProps } = item;
-                    return <li key={id} className="list-group-item"><ComponentItem {...itemProps} /></li>
+                    const { id, ...itemProps } = item;  
+                    return <li key={id} onClick={() => taskDel(id)} className="list-group-item"><ComponentItem {...itemProps} /></li>
                 })
             }
         </ul>
