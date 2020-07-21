@@ -2,6 +2,7 @@ import React from 'react';
 
 import ContainerRow from '../components/container-row';
 import List from '../components/list';
+import AddTask from '../components/add-task';
 import TodoTask from '../components/todo-task';
 
 import classes from './app.module.scss';
@@ -13,7 +14,7 @@ const App = () => {
             <div className='col-12 col-sm-6'>
                 {/* <TodoSearch /> */}
                 <List data={testData} component={TodoTask} />
-                {/* <TodoAddTast /> */}
+                <AddTask />
             </div>
         </ContainerRow>
     )
