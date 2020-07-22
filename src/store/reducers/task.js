@@ -1,20 +1,25 @@
 import { TASK_ADD, TASK_DELETE } from '../constants';
 
 const initialState = {
-    tasks: [
-        // {id: 0, title: 'I am big title', descr: 'My text in descr block'}, 
-        // {id: 1, title: 'I am big title', descr: 'My text in descr block'}, 
-        // {id: 2, title: 'I am big title', descr: 'My text in descr block'}
-    ],
+    tasks: [],
 }
 
 const taskReducer = (state = initialState, action) => {
-
+   
     switch(action.type) {
-        case TASK_ADD: 
+
+        case TASK_ADD:
+
+            const { tasks } = state;
+            const { title, descr } = action.payload;
+
+            let newTaskId = !tasks.length ? 0 : tasks.length;       
+
+            const newTasksArr = [...tasks, { id: newTaskId, title, descr }];  
+
             return {
                 ...state,
-                tasks: action.payload,
+                tasks: newTasksArr,
             }
 
         case TASK_DELETE:

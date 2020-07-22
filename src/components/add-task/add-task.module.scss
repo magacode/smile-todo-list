@@ -1,0 +1,13 @@
+.modalFooter {
+    padding: 10px 0;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+  
+.modalFooter button:last-child {
+margin-left: 10px;
+}
