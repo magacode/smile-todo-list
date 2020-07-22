@@ -7,10 +7,10 @@ const taskAdd = (newTaskObj) => {
     }
 }
 
-const taskDel = (updateTasks) => {    
+const taskDel = (id) => {    
     return {
         type: TASK_DELETE,
-        payload: updateTasks,
+        payload: id,
     }
 }
 
