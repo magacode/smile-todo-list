@@ -1,4 +1,4 @@
-import { TASK_ADD, TASK_DELETE } from '../constants';
+import { TASK_ADD, TASK_DEL } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {
@@ -24,7 +24,7 @@ const taskReducer = (state = initialState, action) => {
                 tasks: newTasksArr,
             }
 
-        case TASK_DELETE:
+        case TASK_DEL:
 
             const idx = getIdxArray(tasks, action.payload);
 
