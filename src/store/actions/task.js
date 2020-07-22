@@ -1,4 +1,4 @@
-import { TASK_ADD, TASK_DELETE } from '../constants';
+import { TASK_ADD, TASK_DEL } from '../constants';
 
 const taskAdd = (newTaskObj) => {   
     return {
@@ -9,7 +9,7 @@ const taskAdd = (newTaskObj) => {
 
 const taskDel = (id) => {    
     return {
-        type: TASK_DELETE,
+        type: TASK_DEL,
         payload: id,
     }
 }
