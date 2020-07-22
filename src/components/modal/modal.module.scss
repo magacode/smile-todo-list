@@ -21,9 +21,12 @@
   }
   
   .modalHeader,
-  .modalBody,
-  .modalFooter {
+  .modalBody {
     padding: 10px 20px;
+  }
+
+  .modalFooter {
+    padding: 10px 0;
   }
   
   .modalHeader {
@@ -47,4 +50,9 @@
   
   .modalFooter button:last-child {
     margin-left: 10px;
+  }
+
+  .times {
+    padding: 4px;
+    cursor: pointer;
   }

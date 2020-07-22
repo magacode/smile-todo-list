@@ -1,12 +1,9 @@
 import { TASK_ADD, TASK_DELETE } from '../constants';
 
-const taskAdd = (newArray) => {  
-
-  
-
+const taskAdd = (newTaskObj) => {   
     return {
         type: TASK_ADD,
-        payload: newArray, 
+        payload: newTaskObj, 
     }
 }
 

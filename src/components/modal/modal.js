@@ -1,9 +1,10 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 import Portal from '../portal';
 
-// import classes from './modal.module.scss';
-import './modal.scss';
+import classes from './modal.module.scss';
 
 const Modal = ({ title, isOpen, onCancel, children }) => {
 
@@ -11,24 +12,21 @@ const Modal = ({ title, isOpen, onCancel, children }) => {
         <>
             {
                 isOpen && 
-                <Portal>
-                    <div className="modalOverlay">
-                        <div className="modalWindow">
-                            <div className="modalHeader">
-                                <div className="modalTitle">{title}</div>
-                                <div className="times" onClick={onCancel}></div>
-                            </div>
-                            <div className="modalBody">
-                                {children}
-                            </div>
-                            <div className="modalFooter">
-                                <button type="button" onClick={onCancel} className="btn btn-secondary">Отмена</button>
-                                {/* <button type="button" onClick={onSubmit} className="btn btn-success">Success</button> */}
-                                
+                    <Portal>
+                        <div className={classes.modalOverlay}>
+                            <div className={classes.modalWindow}>
+                                <div className={classes.modalHeader}>
+                                    <div className={classes.modalTitle}>{title}</div>
+                                    <div className={classes.times} onClick={onCancel}>
+                                        <FontAwesomeIcon icon={faTimesCircle} />
+                                    </div>
+                                </div>
+                                <div className={classes.modalBody}>
+                                    {children}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Portal> 
+                    </Portal> 
             }  
         </>
     )
