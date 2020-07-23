@@ -1,4 +1,4 @@
-import { TASK_ADD, TASK_DEL } from '../constants';
+import { TASK_ADD, TASK_DEL, TASK_EDIT } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {
@@ -6,6 +6,7 @@ const initialState = {
 }
 
 const taskReducer = (state = initialState, action) => {
+    console.log(action.type)
    
     const { tasks } = state;
 
@@ -35,6 +36,19 @@ const taskReducer = (state = initialState, action) => {
                     ...tasks.slice(idx +1)
                ],
             }
+
+        case TASK_EDIT:            
+            const updateIdx = getIdxArray(tasks, action.payload.id);
+
+            return {
+                ...state,
+                tasks: [
+                    ...tasks.slice(0, updateIdx),
+                    { ...action.payload },
+                    ...tasks.slice(updateIdx +1)
+               ]                
+            }
+
 
         default:
             return state;

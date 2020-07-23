@@ -1,12 +1,12 @@
 import React from 'react';
 
-const List = ({ data, taskDel, component: ComponentItem }) => {
+const List = ({ data, openModalDelTask, viewTask, openModalEditTask, component: ComponentItem }) => {
     return (
         <ul className="list-group">
             {
                 data.map((item) => {
-                    const { id, ...itemProps } = item;  
-                    return <li key={id} onClick={() => taskDel(id)} className="list-group-item"><ComponentItem {...itemProps} /></li>
+                    const { id } = item;  
+                    return <li key={id} className="list-group-item d-flex justify-content-between align-items-center"><ComponentItem {...item} openModalDelTask={openModalDelTask} viewTask={viewTask} openModalEditTask={openModalEditTask} /></li>
                 })
             }
         </ul>
