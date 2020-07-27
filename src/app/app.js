@@ -7,8 +7,8 @@ import List from '../components/list';
 import AddTask from '../components/add-task';
 import TodoTask from '../components/todo-task';
 import { taskDel, taskAdd, taskEdit } from '../store/actions';
-import ViewTask from '../components/view-task/view-task';
-import ModalTask from '../components/modal-task/modal-task';
+// import ViewTask from '../components/view-task/view-task';
+// import ModalTask from '../components/modal-task/modal-task';
 
 import classes from './app.module.scss';
 
@@ -85,9 +85,9 @@ const App = ({ tasks, taskDel, taskAdd, taskEdit }) => {
     return (
         <ContainerRow direction="center">
             <div className='col-12 col-sm-6'>
-                <List data={tasks} component={TodoTask} openModalDelTask={openModalDelTask} viewTask={viewTask} openModalEditTask={openModalEditTask} />
-                <button type="button" onClick={() => openModalCreateTask()} className="btn btn-success">Создать задачу</button>
-                <ModalTask modalType={modalType} isOpen={isOpen} setIsOpen={closeModal} view={view} taskData={taskData} createTask={createTask} setTaskData={setTaskData} editTask={editTask} closeModalDel={closeModalDel} />
+                {/* <List data={tasks} component={TodoTask} openModalDelTask={openModalDelTask} viewTask={viewTask} openModalEditTask={openModalEditTask} /> */}
+                {/* <button type="button" onClick={() => openModalCreateTask()} className="btn btn-success">Создать задачу</button> */}
+                {/* <ModalTask modalType={modalType} isOpen={isOpen} setIsOpen={closeModal} view={view} taskData={taskData} createTask={createTask} setTaskData={setTaskData} editTask={editTask} closeModalDel={closeModalDel} /> */}
             </div>
         </ContainerRow>
     )    
