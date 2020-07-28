@@ -2,12 +2,12 @@ import { TASK_ADD, TASK_DEL, TASK_EDIT } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {
-    tasks: [],
+    tasks: [
+        { id: 0, title: 'Hello', descr: 'Descr' }
+    ],
 }
 
 const taskReducer = (state = initialState, action) => {
-    console.log(action.type)
-   
     const { tasks } = state;
 
     switch(action.type) {
