@@ -13,6 +13,7 @@ const App = () => {
       <div className='col-12 col-sm-6'>
         <TasksList setIsOpen={setIsOpen} setDataModal={setDataModal} />
         <ModalTask isOpen={isOpen} onCancel={setIsOpen} dataModal={dataModal} />
+        <button type="button" onClick={() => { setIsOpen(true); setDataModal({ ...dataModal, mode: 'create' }) }} className="btn btn-success">Создать задачу</button>
       </div>
     </ContainerRow>
   )

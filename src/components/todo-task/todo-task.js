@@ -5,7 +5,6 @@ import { faTrash, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
 import classes from './todo-task.module.scss';
 
 const TodoTask = ({ id, title, setIsOpen, setDataModal }) => {
-  console.log('ID', id);
   return (
     <>
       <h5 className="mb-1">{title}</h5>
