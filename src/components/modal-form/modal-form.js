@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { getIdxArray } from '../../utils';
-import { taskEdit, taskAdd } from '../../store/actions';
+import { taskEdit, taskAdd, tasksUpdate } from '../../store/actions';
 
-const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, onCancel }) => {
+const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, tasksUpdate, onCancel }) => {
   const idx = getIdxArray(tasks, id);
   const task = tasks[idx];
 
@@ -18,11 +18,11 @@ const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, onCancel }) => {
 
     switch(mode) {
       case 'edit':
-        taskEdit({ id, title, descr });
+        tasksUpdate({ id, title, descr });
         break;
 
       case 'create':
-        taskAdd({ title, descr });
+        tasksUpdate({ title, descr });
         break;
 
     }
@@ -77,6 +77,7 @@ const mapStateToProps = ({ taskReducer }) => {
 const mapDispatchToProps = {
   taskEdit,
   taskAdd,
+  tasksUpdate,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalForm);

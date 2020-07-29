@@ -1,6 +1,6 @@
 import { AUTH_USER_AUTHORIZATION, AUTH_USER_DEAUTORIZATION } from './auth';
 import { MODAL_OPEN, MODAL_CLOSE } from './modal';
-import { TASK_ADD, TASK_DEL, TASK_EDIT } from './task';
+import { TASK_ADD, TASK_DEL, TASK_EDIT, TASKS_UPDATE } from './task';
 
 export {
     AUTH_USER_AUTHORIZATION, 
@@ -10,4 +10,5 @@ export {
     TASK_ADD, 
     TASK_DEL,
     TASK_EDIT,
+    TASKS_UPDATE,
 }
