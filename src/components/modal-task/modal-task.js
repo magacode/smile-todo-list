@@ -1,30 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Modal from '../modal';
+import ModalForm from '../modal-form';
+import ModalConfirm from '../modal-confirm';
 
 import classes from './modal-task.module.scss';
 
-const ModalTask = () => {
-    return (
-        <div className="add-task">
-            <Modal title="...задачу" isOpen={isOpen} onCancel={() => setIsOpen(false)}>
+const ModalTask = ({ isOpen, onCancel, dataModal }) => {
 
-            </Modal>
-        </div>
-    )
+  // По умолчанию осущесвляется создание задачи
+  // Если есть режим редактирования и идентификатор, то редактирование
+  // Если режим просмотр и идентификатор, то открыть задачу.
+  // Если режим удаления, то удалить задачу по идентификатору.  
+
+  const titleModal = () => {
+    const { mode } = dataModal;
+
+    switch(mode) {
+      case 'view':
+        return 'Просмотр задачи';
+
+      case 'edit':
+        return 'Редактировать задачу';
+
+      case 'create':
+        return 'Создать задачу';
+
+      default: 
+        return 'Удалить задачу'
+    }
+  }
+  
+  const modalBody = () => {
+    const { mode, id } = dataModal;
+
+    switch(mode) {
+      case 'view':
+      case 'edit':
+      case 'create':
+        return <ModalForm mode={mode} id={id} onCancel={onCancel} />
+
+      default:
+        return <ModalConfirm id={id} onCancel={onCancel} />
+    }    
+  }
+
+  return (
+    <div className="add-task">
+      <Modal title={titleModal()} isOpen={isOpen} onCancel={() => onCancel(false)}>
+        { modalBody() }         
+      </Modal>
+    </div>
+  )
 }
 
 export default ModalTask;
-
-
-
-
-
-
-
-
-
-
 
 
 

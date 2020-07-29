@@ -1,57 +1,61 @@
-import { TASK_ADD, TASK_DEL, TASK_EDIT } from '../constants';
+import { TASK_ADD, TASK_DEL, TASK_EDIT, TASKS_UPDATE } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {
-    tasks: [],
+  tasks: [],
 }
 
 const taskReducer = (state = initialState, action) => {
-    console.log(action.type)
-   
-    const { tasks } = state;
+  const { tasks } = state;
 
-    switch(action.type) {
+  switch(action.type) {
 
-        case TASK_ADD:
+    case TASK_DEL:
 
-            const { title, descr } = action.payload;
+      const idx = getIdxArray(tasks, action.payload);
 
-            let newTaskId = !tasks.length ? 0 : tasks.length;       
+      return {
+        ...state,
+        tasks: [
+            ...tasks.slice(0, idx),
+            ...tasks.slice(idx +1)
+        ],
+      }
 
-            const newTasksArr = [...tasks, { id: newTaskId, title, descr }];  
+    case TASKS_UPDATE:          
+      const { id, title, descr } = action.payload;
 
-            return {
-                ...state,
-                tasks: newTasksArr,
-            }
+      const updateIdx = getIdxArray(tasks, id); 
+          
+      let newTaskId;
+      let updateTasks;
 
-        case TASK_DEL:
+      if (id === undefined) {
 
-            const idx = getIdxArray(tasks, action.payload);
+        newTaskId = tasks.length ?  tasks[tasks.length - 1].id + 1 : 0;
 
-            return {
-                ...state,
-                tasks: [
-                    ...tasks.slice(0, idx),
-                    ...tasks.slice(idx +1)
-               ],
-            }
+        updateTasks = [
+          ...tasks,
+          { id: newTaskId, title, descr },
+        ];
+          
+      } else {
+        newTaskId = id;
 
-        case TASK_EDIT:            
-            const updateIdx = getIdxArray(tasks, action.payload.id);
+        updateTasks = [
+          ...tasks.slice(0, updateIdx),
+          { ...action.payload },
+          ...tasks.slice(updateIdx +1)
+        ] 
+      }
 
-            return {
-                ...state,
-                tasks: [
-                    ...tasks.slice(0, updateIdx),
-                    { ...action.payload },
-                    ...tasks.slice(updateIdx +1)
-               ]                
-            }
+      return {
+        ...state,
+        tasks: updateTasks,
+      }
 
-
-        default:
-            return state;
+    default:
+        return state;
 
     }
 
