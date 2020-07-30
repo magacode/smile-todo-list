@@ -1,4 +1,4 @@
-import { TASK_ADD, TASK_DEL, TASK_EDIT, TASKS_UPDATE } from '../constants';
+import { TASK_DEL, TASKS_UPDATE } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {

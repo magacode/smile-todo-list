@@ -1,23 +1,9 @@
-import { TASK_ADD, TASK_DEL, TASK_EDIT, TASKS_UPDATE } from '../constants';
-
-const taskAdd = (newTaskObj) => {   
-    return {
-        type: TASK_ADD,
-        payload: newTaskObj, 
-    }
-}
+import { TASK_DEL, TASKS_UPDATE } from '../constants';
 
 const taskDel = (id) => {    
     return {
         type: TASK_DEL,
         payload: id,
-    }
-}
-
-const taskEdit = (updateTaskObj) => {
-    return {
-        type: TASK_EDIT,
-        payload: updateTaskObj,
     }
 }
 
@@ -29,8 +15,6 @@ const tasksUpdate = (updateTaskObj) => {
 }
 
 export {
-    taskAdd,
     taskDel,
-    taskEdit,
     tasksUpdate,
 }

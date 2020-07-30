@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ContainerRow from '../components/container-row';
 
@@ -13,7 +14,7 @@ const PricesPage = () => {
               <div className="card-body">
                 <h5 className="card-title">Start</h5>
                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" className="btn btn-primary">Buy</a>
+                <Link to="#" className="btn btn-primary">Buy</Link>
               </div>
             </div>
           </div>
@@ -22,7 +23,7 @@ const PricesPage = () => {
               <div className="card-body">
                 <h5 className="card-title">Expert</h5>
                 <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" className="btn btn-primary">Buy</a>
+                <Link to="#" className="btn btn-primary">Buy</Link>
               </div>
             </div>
           </div>

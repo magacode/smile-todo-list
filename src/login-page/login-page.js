@@ -5,8 +5,6 @@ import { useHistory, useLocation, Link } from 'react-router-dom';
 import { authUserAuthorization } from '../store/actions';
 import ContainerRow from '../components/container-row';
 
-import classes from './login-page.module.scss';
-
 const LoginPage = ({ autorization, authUserAuthorization }) => {    
     let history = useHistory();
     let location = useLocation();
