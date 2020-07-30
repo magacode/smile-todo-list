@@ -4,17 +4,18 @@ import { connect } from 'react-redux';
 import TodoTask from '../todo-task';
 
 const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
+  
   return (
     <ul className="list-group">
       {
-        tasksList.map((item) => {
-          const { id, title } = item;  
-          
+        Object.keys(tasksList).map((item) => {          
+          const { title } = tasksList[item];  
+
           return  <li 
-                    key={id} 
+                    key={item} 
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <TodoTask id={id} title={title} setIsOpen={setIsOpen} setDataModal={setDataModal} />
+                    <TodoTask id={item} title={title} setIsOpen={setIsOpen} setDataModal={setDataModal} />
                   </li>
         })
       }
@@ -24,7 +25,7 @@ const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
 
 const mapStateToProps = ({ taskReducer }) => {
   return {
-    tasksList: taskReducer.tasks,
+    tasksList: taskReducer.tasks.byId,
   }
 }
 

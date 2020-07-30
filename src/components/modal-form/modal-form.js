@@ -5,8 +5,7 @@ import { getIdxArray } from '../../utils';
 import { tasksUpdate } from '../../store/actions';
 
 const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, tasksUpdate, onCancel }) => {
-  const idx = getIdxArray(tasks, id);
-  const task = tasks[idx];
+  let task = id === null ? {} : tasks[id];
 
   const [ taskData, setTaskData ] = useState({ ...task });
   
@@ -70,7 +69,7 @@ const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, tasksUpdate, onCancel }
 
 const mapStateToProps = ({ taskReducer }) => {
   return {
-    tasks: taskReducer.tasks,
+    tasks: taskReducer.tasks.byId,
   }
 }
 
