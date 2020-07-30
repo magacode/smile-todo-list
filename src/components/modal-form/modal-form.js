@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { getIdxArray } from '../../utils';
-import { taskEdit, taskAdd, tasksUpdate } from '../../store/actions';
+import { tasksUpdate } from '../../store/actions';
 
 const ModalForm = ({ mode, id, tasks, taskEdit, taskAdd, tasksUpdate, onCancel }) => {
   const idx = getIdxArray(tasks, id);
@@ -75,8 +75,6 @@ const mapStateToProps = ({ taskReducer }) => {
 }
 
 const mapDispatchToProps = {
-  taskEdit,
-  taskAdd,
   tasksUpdate,
 }
 
