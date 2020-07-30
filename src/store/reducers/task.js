@@ -2,61 +2,76 @@ import { TASK_DEL, TASKS_UPDATE } from '../constants';
 import { getIdxArray } from '../../utils';
 
 const initialState = {
-  tasks: [],
+  tasks: {
+    byId: {},
+    allIds: [],
+  }
 }
 
+let maxId = 0;
+
 const taskReducer = (state = initialState, action) => {
-  const { tasks } = state;
+  const { tasks } = state;  
 
   switch(action.type) {
 
     case TASK_DEL:
+      const delId = action.payload;
 
-      const idx = getIdxArray(tasks, action.payload);
+      const allTasks = Object.assign({}, tasks.byId);      
+      delete allTasks[delId];
+
+      const delIdx =  tasks.allIds.findIndex((el) => el === delId);
+      const newAllIds = [
+        ...tasks.allIds.slice(0, delIdx),
+        ...tasks.allIds.slice(delIdx + 1),
+      ];
 
       return {
         ...state,
-        tasks: [
-            ...tasks.slice(0, idx),
-            ...tasks.slice(idx +1)
-        ],
-      }
+        tasks: {
+          byId: allTasks,
+          allIds: newAllIds,
+        },
+      } 
 
     case TASKS_UPDATE:          
       const { id, title, descr } = action.payload;
-
-      const updateIdx = getIdxArray(tasks, id); 
           
-      let newTaskId;
-      let updateTasks;
+      let updateById;
+      let updateAllIds;
 
       if (id === undefined) {
+        let taskId = `task${++maxId}`;
 
-        newTaskId = tasks.length ?  tasks[tasks.length - 1].id + 1 : 0;
+        updateById = Object.assign({}, tasks.byId, {[taskId]: { title, descr }});
+        updateAllIds = [...tasks.allIds, taskId];
 
-        updateTasks = [
-          ...tasks,
-          { id: newTaskId, title, descr },
-        ];
+        return {
+          ...state,
+          tasks: {
+            byId: updateById,
+            allIds: updateAllIds,
+          },
+        }
           
       } else {
-        newTaskId = id;
 
-        updateTasks = [
-          ...tasks.slice(0, updateIdx),
-          { ...action.payload },
-          ...tasks.slice(updateIdx +1)
-        ] 
-      }
-
-      return {
-        ...state,
-        tasks: updateTasks,
+        const allTasks = Object.assign({}, tasks.byId);
+        allTasks[id] = { title, descr };
+ 
+        return {
+          ...state,
+          tasks: {
+            ...tasks,
+            byId: allTasks,
+          },
+        } 
       }
 
     default:
         return state;
-
+        
     }
 
 }

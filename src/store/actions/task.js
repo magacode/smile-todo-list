@@ -1,6 +1,6 @@
 import { TASK_DEL, TASKS_UPDATE } from '../constants';
 
-const taskDel = (id) => {    
+const taskDel = (id) => {  
     return {
         type: TASK_DEL,
         payload: id,

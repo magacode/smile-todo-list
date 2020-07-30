@@ -8,7 +8,7 @@ import ModalForm from '../modal-form';
 import ModalConfirm from '../modal-confirm';
 
 const ModalTask = ({ isOpen, onCancel, dataModal, taskDel }) => {
-
+  
   const titleModal = () => {
     const { mode } = dataModal;
 
