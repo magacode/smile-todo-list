@@ -80,7 +80,7 @@ const taskReducer = (state = initialState, action) => {
       if (id === undefined) {
         let taskId = `task${++maxId}`;
 
-        updateById = Object.assign({}, tasks.byId, {[taskId]: { title, descr }});
+        updateById = Object.assign({}, tasks.byId, {[taskId]: { id: taskId, title, descr }});
         updateAllIds = [...tasks.allIds, taskId];
 
         return {
@@ -94,7 +94,7 @@ const taskReducer = (state = initialState, action) => {
       } else {
 
         const allTasks = Object.assign({}, tasks.byId);
-        allTasks[id] = { title, descr };
+        allTasks[id] = { id, title, descr };
  
         return {
           ...state,
