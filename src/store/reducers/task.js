@@ -1,19 +1,55 @@
-import { TASK_DEL, TASKS_UPDATE } from '../constants';
-import { getIdxArray } from '../../utils';
+import { TASK_DEL, TASKS_UPDATE, TASKS_SEARCH } from '../constants';
 
 const initialState = {
   tasks: {
     byId: {},
     allIds: [],
+  },
+  searchTasks: {
+    byId: {},
+    allIds: [],    
   }
 }
 
 let maxId = 0;
 
 const taskReducer = (state = initialState, action) => {
-  const { tasks } = state;  
+  const { tasks, searchTasks } = state;  
 
   switch(action.type) {
+
+    case TASKS_SEARCH:
+      const newSearchObj = {};
+      const newSearchAllIds = [];
+
+      const term = action.payload;
+
+      if (term.length !== 0) {
+        for (let prop in tasks.byId) {
+          if (tasks.byId.hasOwnProperty(prop)) {
+            if (tasks.byId[prop].title.indexOf(term) > -1) {
+              newSearchObj[prop] = tasks.byId[prop];
+              newSearchAllIds.push(prop);
+            } 
+          }
+        }
+      } else {
+          return {
+          ...state,
+          searchTasks: {
+            byId: tasks.byId,
+            allIds: tasks.allIds,
+          },
+        }
+      }
+
+      return {
+        ...state,
+        searchTasks: {
+          byId: newSearchObj,
+          allIds: newSearchAllIds,
+        },
+      }
 
     case TASK_DEL:
       const delId = action.payload;

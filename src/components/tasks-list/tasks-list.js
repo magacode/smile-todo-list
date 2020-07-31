@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import TodoTask from '../todo-task';
 
 const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
-  
   return (
     <ul className="list-group">
       {
@@ -25,7 +24,7 @@ const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
 
 const mapStateToProps = ({ taskReducer }) => {
   return {
-    tasksList: taskReducer.tasks.byId,
+    tasksList: taskReducer.searchTasks.byId,
   }
 }
 
