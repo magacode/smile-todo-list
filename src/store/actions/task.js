@@ -1,4 +1,4 @@
-import { TASK_DEL, TASKS_UPDATE, TASKS_SEARCH } from '../constants';
+import { TASK_DEL, TASKS_UPDATE, TASKS_SEARCH, TASKS_FILTER, TASK_DONE, TASK_STATUS } from '../constants';
 
 const taskDel = (id) => {  
     return {
@@ -21,8 +21,32 @@ const tasksSearch = (term) => {
   }
 }
 
+const tasksFilter = (filter) => {
+  return {
+    type: TASKS_FILTER,
+    payload: filter,
+  }
+}
+
+const taskDone = (id) => {
+  return {
+    type: TASK_DONE,
+    payload: id,
+  }
+}
+
+const taskFilterStatus = (status) => {
+  return {
+    type: TASK_STATUS,
+    payload: status,
+  }
+}
+
 export {
   taskDel,
   tasksUpdate,
   tasksSearch,
+  tasksFilter,
+  taskDone,
+  taskFilterStatus,
 }

@@ -24,7 +24,7 @@ const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
 
 const mapStateToProps = ({ taskReducer }) => {
   return {
-    tasksList: taskReducer.searchTasks.byId,
+    tasksList: taskReducer.filterTasks.byId,
   }
 }
 

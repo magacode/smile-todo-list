@@ -1,4 +1,4 @@
-import { TASK_DEL, TASKS_UPDATE, TASKS_SEARCH } from '../constants';
+import { TASK_DEL, TASKS_UPDATE, TASKS_SEARCH, TASKS_FILTER, TASK_DONE, TASK_STATUS } from '../constants';
 
 const initialState = {
   tasks: {
@@ -8,15 +8,166 @@ const initialState = {
   searchTasks: {
     byId: {},
     allIds: [],    
-  }
+  },
+  filterTasks: {
+    byId: {},
+    allIds: [],
+  },
+  filterStatus: 'active',
 }
 
 let maxId = 0;
 
 const taskReducer = (state = initialState, action) => {
-  const { tasks, searchTasks } = state;  
+  const { tasks, searchTasks, filterTasks } = state;  
 
   switch(action.type) {
+
+    case TASK_STATUS:
+      return {
+        ...state,
+        filterStatus: action.payload,
+      }
+
+    case TASK_DONE:
+      const idTask = action.payload;
+    
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          byId: {
+            ...state.tasks.byId,
+            [idTask]: { ...state.tasks.byId[idTask], done: !state.tasks.byId[idTask].done }
+          }
+        },
+        searchTasks: {
+          ...state.searchTasks,
+          byId: {
+            ...state.searchTasks.byId,
+            [idTask]: { ...state.searchTasks.byId[idTask], done: !state.searchTasks.byId[idTask].done }
+          }
+        },
+        filterTasks: {
+          ...state.filterTasks,
+          byId: {
+            ...state.filterTasks.byId,
+            [idTask]: { ...state.filterTasks.byId[idTask], done: !state.filterTasks.byId[idTask].done }
+          }
+        }
+      }
+
+
+
+    // case TASK_DONE:
+    // let newDoneFilterObj;  
+    // let newDoneSearchObj;  
+    // let newDoneTasksObj;  
+
+    // const idTask = action.payload;
+
+
+    // for (let prop in filterTasks) {
+      // if (filterTasks.hasOwnProperty(prop)) {
+        // console.log('---', filterTasks.byId[idTask], '---')
+        // if (filterTasks.byId[idTask] === idTask) {
+          // console.log('ID: ', idTask)
+          // newDoneFilterObj = {         
+          //     ...state.filterTasks.allIds,
+          //     byId: { ...filterTasks.byId, [idTask]: { ...filterTasks.byId[prop], done: !filterTasks.byId[prop].done } },                                
+          // }
+        // }
+      // }
+    // }
+    
+    // for (let prop in searchTasks) {
+    //   if (searchTasks.hasOwnProperty(prop)) {
+    //     if (searchTasks.byId[prop] === idTask) {
+
+    //       newDoneSearchObj = {
+
+    //           ...state.searchTasks.allIds,
+    //           byId: { ...searchTasks.byId, [idTask]: { ...searchTasks.byId[prop], done: !searchTasks.byId[prop].done } },                           
+ 
+    //       }
+    //     }
+    //   }
+    // }
+
+    // for (let prop in tasks) {
+    //   if (tasks.hasOwnProperty(prop)) {
+    //     if (tasks.byId[prop] === idTask) {
+
+    //       newDoneTasksObj = {
+    //           ...state.tasks.allIds,
+    //           byId: { ...tasks.byId, [idTask]: { ...tasks.byId[prop], done: !tasks.byId[prop].done } },                           
+    //       }
+    //     }
+    //   }
+    // }
+
+
+
+    // return {
+    //   ...state,
+    //   tasks: { ...newDoneTasksObj },
+    //   searchTasks: { ...newDoneSearchObj },
+    //   filterTasks: { ...newDoneFilterObj },
+    // }
+
+    case TASKS_FILTER: 
+      const newFilterObj = {};
+      const newFilterAllIds = [];
+
+      const filter = action.payload;
+
+      switch(filter) {
+        case 'all':
+          return {
+            ...state,
+            filterTasks: {
+              byId: searchTasks.byId,
+              allIds: searchTasks.allIds,              
+            },
+          }
+
+        case 'active':
+          for (let prop in searchTasks.byId) {
+            if (searchTasks.byId.hasOwnProperty(prop)) {
+              if (!searchTasks.byId[prop].done) {
+                newFilterObj[prop] = searchTasks.byId[prop];
+                newFilterAllIds.push(prop);
+              }
+            }
+          }
+
+          return {
+            ...state,
+            filterTasks: {
+              byId: newFilterObj,
+              allIds: newFilterAllIds,              
+            },
+          }
+
+        case 'done':
+          for (let prop in searchTasks.byId) {
+            if (searchTasks.byId.hasOwnProperty(prop)) {
+              if (searchTasks.byId[prop].done) {
+                newFilterObj[prop] = searchTasks.byId[prop];
+                newFilterAllIds.push(prop);
+              }
+            }
+          }
+
+          return {
+            ...state,
+            filterTasks: {
+              byId: newFilterObj,
+              allIds: newFilterAllIds,              
+            },
+          }            
+
+      }
 
     case TASKS_SEARCH:
       const newSearchObj = {};
@@ -72,7 +223,7 @@ const taskReducer = (state = initialState, action) => {
       } 
 
     case TASKS_UPDATE:          
-      const { id, title, descr } = action.payload;
+      const { id, title, descr, done } = action.payload;
           
       let updateById;
       let updateAllIds;
@@ -80,7 +231,7 @@ const taskReducer = (state = initialState, action) => {
       if (id === undefined) {
         let taskId = `task${++maxId}`;
 
-        updateById = Object.assign({}, tasks.byId, {[taskId]: { id: taskId, title, descr }});
+        updateById = Object.assign({}, tasks.byId, {[taskId]: { id: taskId, title, descr, done: false, }});
         updateAllIds = [...tasks.allIds, taskId];
 
         return {
@@ -94,7 +245,7 @@ const taskReducer = (state = initialState, action) => {
       } else {
 
         const allTasks = Object.assign({}, tasks.byId);
-        allTasks[id] = { id, title, descr };
+        allTasks[id] = { id, title, descr, done, };
  
         return {
           ...state,

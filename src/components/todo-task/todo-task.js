@@ -1,13 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
 
+import { taskDone } from '../../store/actions';
+
 import classes from './todo-task.module.scss';
 
-const TodoTask = ({ id, title, setIsOpen, setDataModal }) => {
+const TodoTask = ({ id, title, setIsOpen, setDataModal, taskDone }) => {
   return (
     <>
-      <h5 className="mb-1">{title}</h5>
+      <h5 onClick={() => taskDone(id)} className="mb-1">{title}</h5>
       <FontAwesomeIcon 
         icon={faEye} 
         onClick={() => {
@@ -36,4 +39,8 @@ const TodoTask = ({ id, title, setIsOpen, setDataModal }) => {
   );
 }
 
-export default TodoTask;
+const mapDispatchToProps = {
+  taskDone,
+}
+
+export default connect(null, mapDispatchToProps)(TodoTask);
