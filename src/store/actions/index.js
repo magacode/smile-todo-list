@@ -1,6 +1,6 @@
 import { authUserAuthorization, authUserDeautorization } from './auth';
 import { modalOpen, modalClose } from './modal';
-import { taskDel, tasksUpdate, tasksSearch } from './task';
+import { taskDel, tasksUpdate, tasksSearch, tasksFilter, taskDone, taskFilterStatus } from './task';
 
 export {
     authUserAuthorization,
@@ -10,4 +10,7 @@ export {
     taskDel,
     tasksUpdate,
     tasksSearch,
+    tasksFilter,
+    taskDone,
+    taskFilterStatus,
 }

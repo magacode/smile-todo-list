@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { tasksSearch } from '../../store/actions';
+import { tasksFilter, tasksSearch } from '../../store/actions';
 
-const SearchPanel = ({ tasksSearch, tasks }) => {
+const SearchPanel = ({ tasksFilter, tasksSearch, tasks, filterStatus }) => {
   const [ term, setTerm ] = useState('');
 
   useEffect(() => {
     tasksSearch(term);
-  }, [term, tasks]);
+    tasksFilter(filterStatus);
+  }, [term, tasks, filterStatus]);
 
   return (
       <input type="text" value={term} onChange={(e) => setTerm(e.target.value)} className="form-control" placeholder="Поиск задачи" />
@@ -18,10 +19,12 @@ const SearchPanel = ({ tasksSearch, tasks }) => {
 const mapStateToProps = ({ taskReducer }) => {
   return {
     tasks: taskReducer.tasks.byId,
+    filterStatus: taskReducer.filterStatus,
   }
 }
 
 const mapDispatchToProps = {
+  tasksFilter,
   tasksSearch,
 }
 
