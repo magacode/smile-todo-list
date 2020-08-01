@@ -7,14 +7,14 @@ const TasksList = ({ tasksList, setIsOpen, setDataModal }) => {
   return (
     <ul className="list-group pt-2">
       {
-        Object.keys(tasksList).map((prop) => {          
-          const { title } = tasksList[prop];  
+        Object.keys(tasksList).map((taskId) => {          
+          const { title } = tasksList[taskId];  
 
           return  <li 
-                    key={prop} 
+                    key={taskId} 
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <TodoTask id={prop} title={title} setIsOpen={setIsOpen} setDataModal={setDataModal} />
+                    <TodoTask id={taskId} title={title} setIsOpen={setIsOpen} setDataModal={setDataModal} />
                   </li>
         })
       }
