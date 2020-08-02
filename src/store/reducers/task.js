@@ -35,85 +35,27 @@ const taskReducer = (state = initialState, action) => {
       return {
         ...state,
         tasks: {
-          ...state.tasks,
+          ...tasks,
           byId: {
-            ...state.tasks.byId,
-            [idTask]: { ...state.tasks.byId[idTask], done: !state.tasks.byId[idTask].done }
+            ...tasks.byId,
+            [idTask]: { ...tasks.byId[idTask], done: !tasks.byId[idTask].done }
           }
         },
         searchTasks: {
-          ...state.searchTasks,
+          ...searchTasks,
           byId: {
-            ...state.searchTasks.byId,
-            [idTask]: { ...state.searchTasks.byId[idTask], done: !state.searchTasks.byId[idTask].done }
+            ...searchTasks.byId,
+            [idTask]: { ...searchTasks.byId[idTask], done: !searchTasks.byId[idTask].done }
           }
         },
         filterTasks: {
-          ...state.filterTasks,
+          ...filterTasks,
           byId: {
-            ...state.filterTasks.byId,
-            [idTask]: { ...state.filterTasks.byId[idTask], done: !state.filterTasks.byId[idTask].done }
+            ...filterTasks.byId,
+            [idTask]: { ...filterTasks.byId[idTask], done: !filterTasks.byId[idTask].done }
           }
         }
       }
-
-
-
-    // case TASK_DONE:
-    // let newDoneFilterObj;  
-    // let newDoneSearchObj;  
-    // let newDoneTasksObj;  
-
-    // const idTask = action.payload;
-
-
-    // for (let prop in filterTasks) {
-      // if (filterTasks.hasOwnProperty(prop)) {
-        // console.log('---', filterTasks.byId[idTask], '---')
-        // if (filterTasks.byId[idTask] === idTask) {
-          // console.log('ID: ', idTask)
-          // newDoneFilterObj = {         
-          //     ...state.filterTasks.allIds,
-          //     byId: { ...filterTasks.byId, [idTask]: { ...filterTasks.byId[prop], done: !filterTasks.byId[prop].done } },                                
-          // }
-        // }
-      // }
-    // }
-    
-    // for (let prop in searchTasks) {
-    //   if (searchTasks.hasOwnProperty(prop)) {
-    //     if (searchTasks.byId[prop] === idTask) {
-
-    //       newDoneSearchObj = {
-
-    //           ...state.searchTasks.allIds,
-    //           byId: { ...searchTasks.byId, [idTask]: { ...searchTasks.byId[prop], done: !searchTasks.byId[prop].done } },                           
- 
-    //       }
-    //     }
-    //   }
-    // }
-
-    // for (let prop in tasks) {
-    //   if (tasks.hasOwnProperty(prop)) {
-    //     if (tasks.byId[prop] === idTask) {
-
-    //       newDoneTasksObj = {
-    //           ...state.tasks.allIds,
-    //           byId: { ...tasks.byId, [idTask]: { ...tasks.byId[prop], done: !tasks.byId[prop].done } },                           
-    //       }
-    //     }
-    //   }
-    // }
-
-
-
-    // return {
-    //   ...state,
-    //   tasks: { ...newDoneTasksObj },
-    //   searchTasks: { ...newDoneSearchObj },
-    //   filterTasks: { ...newDoneFilterObj },
-    // }
 
     case TASKS_FILTER: 
       const newFilterObj = {};
@@ -132,14 +74,14 @@ const taskReducer = (state = initialState, action) => {
           }
 
         case 'active':
-          for (let prop in searchTasks.byId) {
-            if (searchTasks.byId.hasOwnProperty(prop)) {
-              if (!searchTasks.byId[prop].done) {
-                newFilterObj[prop] = searchTasks.byId[prop];
-                newFilterAllIds.push(prop);
-              }
-            }
-          }
+          Object.values(searchTasks.byId).forEach(item => {
+            const { id, done } = item;
+
+            if (!done) {
+              newFilterObj[id] = item;
+              newFilterAllIds.push(id);
+            }            
+          });
 
           return {
             ...state,
@@ -150,14 +92,15 @@ const taskReducer = (state = initialState, action) => {
           }
 
         case 'done':
-          for (let prop in searchTasks.byId) {
-            if (searchTasks.byId.hasOwnProperty(prop)) {
-              if (searchTasks.byId[prop].done) {
-                newFilterObj[prop] = searchTasks.byId[prop];
-                newFilterAllIds.push(prop);
-              }
+          Object.values(searchTasks.byId).forEach(item => {
+            const { id, done } = item;
+            
+            if (done) {
+              newFilterObj[id] = item;
+              newFilterAllIds.push(id);              
             }
-          }
+          });
+
 
           return {
             ...state,
@@ -176,14 +119,14 @@ const taskReducer = (state = initialState, action) => {
       const term = action.payload;
 
       if (term.length !== 0) {
-        for (let prop in tasks.byId) {
-          if (tasks.byId.hasOwnProperty(prop)) {
-            if (tasks.byId[prop].title.indexOf(term) > -1) {
-              newSearchObj[prop] = tasks.byId[prop];
-              newSearchAllIds.push(prop);
-            } 
+
+        Object.values(tasks.byId).forEach(item => {
+          if (item.title.indexOf(term) > -1) {
+            newSearchObj[item.id] = item;
+            newSearchAllIds.push(item.id)
           }
-        }
+        });
+
       } else {
           return {
           ...state,
@@ -205,20 +148,15 @@ const taskReducer = (state = initialState, action) => {
     case TASK_DEL:
       const delId = action.payload;
 
-      const allTasks = Object.assign({}, tasks.byId);      
-      delete allTasks[delId];
-
-      const delIdx =  tasks.allIds.findIndex((el) => el === delId);
-      const newAllIds = [
-        ...tasks.allIds.slice(0, delIdx),
-        ...tasks.allIds.slice(delIdx + 1),
-      ];
+      const delTask = (obj, id) => {
+        return Object.values(obj).filter(item => item.id !== delId);
+      }
 
       return {
         ...state,
         tasks: {
-          byId: allTasks,
-          allIds: newAllIds,
+          byId: delTask(tasks.byId, delId),
+          allIds: delTask(tasks.allIds, delId),
         },
       } 
 
